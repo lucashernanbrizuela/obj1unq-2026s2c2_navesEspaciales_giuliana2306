@@ -3,15 +3,13 @@ class Nave {
 
     method recibirAmenaza()
 
-	method propulsar() {
-		velocidad = (velocidad + 20000).min(300000)
-	}
+    method propulsar() {
+        velocidad = velocidad + 20000
+        if (velocidad > 300000) {
+            velocidad = 300000
+        }
+    }
 }
-/*
-Al código predeterminado se le debe incorporar la función que permite que todas las naves se puedan propulsar. 
-Esto aumenta
- su velocidad en 20.000 kms/seg, pero nunca puede superar los 300.000 kms/seg, siendo este su máximo alcanzable.
-*/
 
 class NaveDeCarga inherits Nave {
     var property carga = 0
@@ -32,8 +30,6 @@ class NaveDeCarga inherits Nave {
         }
     }
 }
-
-
 
 class NaveDePasajeros inherits Nave {
     var property alarma = false
@@ -66,22 +62,33 @@ class NaveDeCombate inherits Nave {
         modo.recibirAmenaza(self)
     }
 }
+
+class NaveDeCargaDeResiduosRadioactivos inherits NaveDeCarga {
+    var selladaAlVacio = false
+
+    method sellarAlVacio() {
+        selladaAlVacio = true
+    }
+    method abrirVacio() {
+        selladaAlVacio = false
+    }
+    override method recibirAmenaza() {
+        velocidad = 0
+    }
+}
+
 object reposo {
+    method invisible() = false
 
-	method invisible() = false
-
-	method recibirAmenaza(nave) {
-		nave.emitirMensaje("¡RETIRADA!")
-	}
-
+    method recibirAmenaza(nave) {
+        nave.emitirMensaje("¡RETIRADA!")
+    }
 }
 
 object ataque {
+    method invisible() = true
 
-	method invisible() = true
-
-	method recibirAmenaza(nave) {
-		nave.emitirMensaje("Enemigo encontrado")
-	}
-
+    method recibirAmenaza(nave) {
+        nave.emitirMensaje("Enemigo encontrado")
+    }
 }
