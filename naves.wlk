@@ -2,7 +2,16 @@ class Nave {
     var property velocidad = 0
 
     method recibirAmenaza()
+
+	method propulsar() {
+		velocidad = (velocidad + 20000).min(300000)
+	}
 }
+/*
+Al código predeterminado se le debe incorporar la función que permite que todas las naves se puedan propulsar. 
+Esto aumenta
+ su velocidad en 20.000 kms/seg, pero nunca puede superar los 300.000 kms/seg, siendo este su máximo alcanzable.
+*/
 
 class NaveDeCarga inherits Nave {
     var property carga = 0
