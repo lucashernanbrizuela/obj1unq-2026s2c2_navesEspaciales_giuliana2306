@@ -1,63 +1,62 @@
-class NaveDeCarga {
+class Nave {
+    var property velocidad = 0
 
-	var property velocidad = 0
-	var property carga = 0
-
-	method sobrecargada() = carga > 100000
-
-	method excedidaDeVelocidad() = velocidad > 100000
-
-	method recibirAmenaza() {
-		carga = 0
-	}
-	
-	method enFalta() = self.sobrecargada() and self.excedidaDeVelocidad()
-	
-	method acercamientoDeControl() {
-		if (self.enFalta()) {
-			self.recibirAmenaza()
-		}
-	}
-
+    method recibirAmenaza()
 }
 
-class NaveDePasajeros {
+class NaveDeCarga inherits Nave {
+    var property carga = 0
 
-	var property velocidad = 0
-	var property alarma = false
-	const cantidadDePasajeros = 0
+    method sobrecargada() = carga > 100000
 
-	method tripulacion() = cantidadDePasajeros + 4
+    method excedidaDeVelocidad() = velocidad > 100000
 
-	method velocidadMaximaPermitida() = 300000 / self.tripulacion() - if (cantidadDePasajeros > 100) 200 else 0
-
-	method estaEnPeligro() = velocidad > self.velocidadMaximaPermitida() or alarma
-
-	method recibirAmenaza() {
-		alarma = true
-	}
-
+    override method recibirAmenaza() {
+        carga = 0
+    }
+    
+    method enFalta() = self.sobrecargada() and self.excedidaDeVelocidad()
+    
+    method acercamientoDeControl() {
+        if (self.enFalta()) {
+            self.recibirAmenaza()
+        }
+    }
 }
 
-class NaveDeCombate {
-	var property velocidad = 0
-	var property modo = reposo
-	const property mensajesEmitidos = []
 
-	method emitirMensaje(mensaje) {
-		mensajesEmitidos.add(mensaje)
-	}
-	
-	method ultimoMensaje() = mensajesEmitidos.last()
 
-	method estaInvisible() = velocidad < 10000 and modo.invisible()
+class NaveDePasajeros inherits Nave {
+    var property alarma = false
+    const cantidadDePasajeros = 0
 
-	method recibirAmenaza() {
-		modo.recibirAmenaza(self)
-	}
+    method tripulacion() = cantidadDePasajeros + 4
 
+    method velocidadMaximaPermitida() = 300000 / self.tripulacion() - if (cantidadDePasajeros > 100) 200 else 0
+
+    method estaEnPeligro() = velocidad > self.velocidadMaximaPermitida() or alarma
+
+    override method recibirAmenaza() {
+        alarma = true
+    }
 }
 
+class NaveDeCombate inherits Nave {
+    var property modo = reposo
+    const property mensajesEmitidos = []
+
+    method emitirMensaje(mensaje) {
+        mensajesEmitidos.add(mensaje)
+    }
+    
+    method ultimoMensaje() = mensajesEmitidos.last()
+
+    method estaInvisible() = velocidad < 10000 and modo.invisible()
+
+    override method recibirAmenaza() {
+        modo.recibirAmenaza(self)
+    }
+}
 object reposo {
 
 	method invisible() = false
