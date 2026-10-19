@@ -9,7 +9,15 @@ class Nave {
             velocidad = 300000
         }
     }
+    method prepararNaveParaViaje() {
+        velocidad = velocidad + 15000.min(300000)
+    }
 }
+
+/*
+
+*/
+
 
 class NaveDeCarga inherits Nave {
     var property carga = 0
@@ -69,6 +77,9 @@ class NaveDeCargaDeResiduosRadioactivos inherits NaveDeCarga {
     method sellarAlVacio() {
         selladaAlVacio = true
     }
+    method estaSelladaAlVacio() {
+        return selladaAlVacio
+    }
     method abrirVacio() {
         selladaAlVacio = false
     }
@@ -92,3 +103,31 @@ object ataque {
         nave.emitirMensaje("Enemigo encontrado")
     }
 }
+
+/*
+method prepararNaveParaViaje() {
+        velocidad = velocidad + 15000.min(300000)
+        NaveDeCargaDeResiduosRadioactivos.sellarAlVacio()
+        self.prepararNaveDeCombate()
+    }
+    method prepararNaveDeCombate() {
+        if ( NaveDeCombate.modo() == ataque) {
+            NaveDeCombate.emitirMensaje("Volviendo a la base")
+        } else { 
+            NaveDeCombate.emitirMensaje("Saliendo en misión")
+            NaveDeCombate.modo(ataque)
+        }
+    }
+*/
+
+/*
+Hacer que todas las naves se puedan preparar para viajar. Esto hace que aumenten su velocidad 15.000 kms/seg 
+(teniendo la restricción de la velocidad máxima posible de 300.000kms/s).
+
+Además de eso ocurre lo siguiente:
+
+    las naves que cargan residuos radioactivos se cierran al vacío.
+    y las de combate, si se encuentran en modo ataque, emiten el mensaje "Volviendo a la base", 
+    mientras que si están en reposo emiten el mensaje "Saliendo en misión" y se ponen en modo ataque.
+
+*/

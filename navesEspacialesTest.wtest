@@ -115,4 +115,41 @@ describe "naves" {
 		assert.equals(0, naveDeResiduos.velocidad())
         assert.equals(5000, naveDeResiduos.carga()) 
 	}
+	test "preparar nave para el viaje" {
+		const naveConPasajeros = new NaveDePasajeros(velocidad = 290000)
+		const naveDeResiduos = new NaveDeCargaDeResiduosRadioactivos()
+		const naveCombate0 = new NaveDeCombate(modo = ataque)
+		const naveCombate1 = new NaveDeCombate (modo = reposo)
+
+		naveConPasajeros.prepararNaveParaViaje() 
+		naveDeResiduos.prepararNaveParaViaje()
+		naveCombate0.prepararNaveParaViaje()
+		naveCombate1.prepararNaveParaViaje()
+
+		
+		assert.equals(300000, naveConPasajeros.velocidad())
+
+        assert.equals(15000, naveDeResiduos.velocidad())
+
+		assert.equals(true , naveDeResiduos.estaSelladaAlVacio())
+
+		assert.equals(15000, naveCombate0.velocidad())
+		assert.equals(["Volviendo a la base"], naveCombate0.ultimoMensaje())
+
+		assert.equals(15000, naveCombate1.velocidad())
+		assert.equals(["Saliendo en mision"], naveCombate0.ultimoMensaje())
+
+
+	}
+
+	test "Enfrentar enemigos" {
+		const naveDePasajeros0 = new NaveDePasajeros()
+
+		naveDePasajeros0.encontrarseConnemigo()
+
+		assert.equals(20000, naveDePasajeros0.velocidad())
+		assert.equals(true, naveDePasajeros0.alarma())
+
+	}
 }
+
